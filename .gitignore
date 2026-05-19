@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.db
+*.sqlite
+*.sqlite3
+logs/
+*.log
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+npm-debug.log*
+pnpm-lock.yaml
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

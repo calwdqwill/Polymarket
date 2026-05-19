@@ -1,0 +1,12 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = [
+  "apps/web/node_modules",
+  "apps/web/.next",
+  "services/api/.venv",
+  "services/api/app/db/migrations/versions",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

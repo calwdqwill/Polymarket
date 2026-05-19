@@ -1,0 +1,16 @@
+[Unit]
+Description=Poly Crypto Chainlink realtime worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=polycrypto
+WorkingDirectory=/opt/poly_crypto/services/api
+EnvironmentFile=/opt/poly_crypto/services/api/.env
+ExecStart=/opt/poly_crypto/services/api/.venv/bin/python -m app.scripts.poll_chainlink_streams --asset all --interval 10
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
