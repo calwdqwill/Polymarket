@@ -58,6 +58,19 @@ VPS
 - `systemd` перезапускает worker после падения;
 - история не зависит от локального Windows sleep/shutdown.
 
+Текущий MVP уже развернут на VPS:
+
+```text
+IP: 155.212.183.185
+Внешний URL: http://155.212.183.185:8080
+API service: poly-crypto-api.service -> 127.0.0.1:18000
+Web service: poly-crypto-web.service -> 127.0.0.1:13000
+Worker service: poly-crypto-chainlink-worker.service
+SQLite backup timer: poly-crypto-db-backup.timer
+```
+
+Порт `8080` выбран намеренно, чтобы не конфликтовать с уже существующим Nginx-сайтом на `mo-ex.online` и процессом, который использует `127.0.0.1:8000`.
+
 ## Переменные окружения backend
 
 На сервере создать `services/api/.env`:
@@ -104,8 +117,8 @@ python -m app.scripts.seed_assets
 Проверка:
 
 ```bash
-uvicorn app.main:app --host 127.0.0.1 --port 8000
-curl http://127.0.0.1:8000/api/status
+uvicorn app.main:app --host 127.0.0.1 --port 18000
+curl http://127.0.0.1:18000/api/status
 ```
 
 ## Worker через systemd
@@ -135,7 +148,7 @@ journalctl -u poly-crypto-chainlink-worker -f
 Проверка live-накопления:
 
 ```bash
-curl http://127.0.0.1:8000/api/status/sources
+curl http://127.0.0.1:18000/api/status/sources
 ```
 
 Ожидание:
@@ -162,7 +175,7 @@ sudo systemctl start poly-crypto-api
 sudo systemctl status poly-crypto-api
 ```
 
-Для внешнего доступа лучше поставить Nginx reverse proxy и TLS, а backend оставить на `127.0.0.1:8000`.
+Для внешнего доступа лучше поставить Nginx reverse proxy и TLS, а backend оставить на loopback-адресе. В текущем VPS-контуре используется `127.0.0.1:18000`, потому что `127.0.0.1:8000` уже занят другим проектом.
 
 ## Frontend
 
@@ -172,21 +185,68 @@ sudo systemctl status poly-crypto-api
 cd /opt/poly_crypto/apps/web
 npm ci
 NEXT_PUBLIC_API_BASE_URL=https://<DOMAIN_OR_API_HOST> npm run build
-npm run start -- -p 3000
+npm run start -- -H 127.0.0.1 -p 13000
 ```
 
-Для production лучше добавить отдельный systemd service для frontend или использовать reverse proxy/PM2. Для MVP достаточно убедиться, что сборка проходит и dashboard видит API.
+Для production/MVP на текущем VPS frontend запущен отдельным `systemd` service:
+
+```text
+ops/linux/poly-crypto-web.service.example
+```
+
+Если нет домена и на сервере уже есть другой сайт, можно использовать отдельный Nginx-порт:
+
+```text
+ops/linux/poly-crypto-nginx-8080.conf.example
+```
+
+Текущая серверная схема:
+
+```text
+browser -> http://155.212.183.185:8080 -> Nginx
+Nginx /api/* -> 127.0.0.1:18000 -> FastAPI
+Nginx /*     -> 127.0.0.1:13000 -> Next.js
+```
+
+Frontend build должен получать:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://155.212.183.185:8080 npm run build
+```
+
+## SQLite backup
+
+На текущем VPS включен ежечасный backup:
+
+```bash
+systemctl status poly-crypto-db-backup.timer
+ls -lh /opt/poly_crypto/backups/sqlite
+```
+
+Backup создается через SQLite backup API, а не простым копированием файла во время записи. Хранятся последние 48 копий.
+
+Важно: это backup на том же сервере. Для production-нормы нужен внешний backup: второй VPS, object storage или другой внешний storage.
 
 ## Контроль после деплоя
 
 Проверить:
 
 ```bash
-curl http://127.0.0.1:8000/api/status
-curl http://127.0.0.1:8000/api/status/sources
+curl http://127.0.0.1:18000/api/status
+curl http://127.0.0.1:18000/api/status/sources
 systemctl status poly-crypto-api
+systemctl status poly-crypto-web
 systemctl status poly-crypto-chainlink-worker
+systemctl status poly-crypto-db-backup.timer
 journalctl -u poly-crypto-chainlink-worker -n 100
+```
+
+Для текущего VPS:
+
+```bash
+curl http://127.0.0.1:18000/api/status
+curl http://127.0.0.1:18000/api/status/sources
+curl http://155.212.183.185:8080/api/status
 ```
 
 Критерий готовности серверного MVP:

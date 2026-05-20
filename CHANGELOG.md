@@ -2,6 +2,51 @@
 
 Все заметные изменения проекта фиксируем здесь.
 
+## 2026-05-20
+
+### Выполнено: серверная выкладка MVP
+
+- Ветка `poly_crypto/V1.0` развернута на VPS `155.212.183.185`.
+- Внешний dashboard доступен на:
+  - `http://155.212.183.185:8080`.
+- Серверный контур запущен без конфликта с существующим сайтом `mo-ex.online`:
+  - `poly-crypto-api.service` -> `127.0.0.1:18000`;
+  - `poly-crypto-web.service` -> `127.0.0.1:13000`;
+  - `poly-crypto-chainlink-worker.service` -> Chainlink Streams polling каждые 10 секунд;
+  - Nginx proxy -> `0.0.0.0:8080`.
+- Локальная SQLite-база перенесена на сервер через консистентный backup, чтобы сохранить уже накопленную историю.
+- Chainlink worker на VPS проверен:
+  - service активен;
+  - Chainlink Streams возвращает HTTP 200;
+  - `GET /api/status/sources` показывает `chainlink_streams.is_live = true`;
+  - ticks продолжают расти.
+- Добавлен ежечасный SQLite backup на сервере:
+  - `poly-crypto-db-backup.timer`;
+  - копии хранятся в `/opt/poly_crypto/backups/sqlite`;
+  - сохраняются последние 48 копий.
+- Добавлены серверные шаблоны:
+  - `ops/linux/poly-crypto-web.service.example`;
+  - `ops/linux/poly-crypto-nginx-8080.conf.example`.
+
+### Проверено
+
+- Внешний `GET http://155.212.183.185:8080` возвращает HTTP 200.
+- Внешний `GET http://155.212.183.185:8080/api/status` возвращает:
+  - `status = ok`;
+  - `environment = prod`;
+  - `database = sqlite`.
+- Внешний `GET http://155.212.183.185:8080/api/status/sources` показывает:
+  - `binance_klines.total_candles = 77761`;
+  - `chainlink_streams.total_candles = 690`;
+  - `chainlink_streams.total_ticks = 13470`;
+  - `chainlink_streams.is_live = true`.
+
+### Осталось
+
+- Настроить внешний backup: текущие ежечасные backups лежат на том же VPS.
+- Разобрать свежий `npm audit` warning на сервере: `postcss < 8.5.10` через `next@15.5.18`, auto-fix не применялся из-за риска breaking change.
+- Получить Chainlink Candlestick historical credentials и дозагрузить `source = chainlink_candlestick`.
+
 ## 2026-05-19
 
 ### Завершено: фаза 9 hardening в MVP-объеме

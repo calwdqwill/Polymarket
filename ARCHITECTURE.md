@@ -365,9 +365,20 @@ Backend test suite включает unit-тесты доменной логик�
 Для серверного MVP подготовлены systemd-шаблоны:
 
 - `ops/linux/poly-crypto-api.service.example`;
-- `ops/linux/poly-crypto-chainlink-worker.service.example`.
+- `ops/linux/poly-crypto-chainlink-worker.service.example`;
+- `ops/linux/poly-crypto-web.service.example`;
+- `ops/linux/poly-crypto-nginx-8080.conf.example`.
 
 Подробный порядок Git/server deploy описан в `docs/deployment-runbook.md`.
+
+Текущий VPS-контур развернут на `155.212.183.185`:
+
+- внешний dashboard: `http://155.212.183.185:8080`;
+- Nginx слушает `0.0.0.0:8080`;
+- frontend `poly-crypto-web.service` слушает `127.0.0.1:13000`;
+- API `poly-crypto-api.service` слушает `127.0.0.1:18000`;
+- Chainlink Streams worker `poly-crypto-chainlink-worker.service` работает через `systemd` с `Restart=always`;
+- SQLite backup `poly-crypto-db-backup.timer` запускается каждый час и хранит последние 48 копий в `/opt/poly_crypto/backups/sqlite`.
 
 ## Поток realtime
 
@@ -480,11 +491,12 @@ python -m app.scripts.seed_assets
 
 ## Текущие ограничения
 
-- SQLite подходит для локального MVP, но позже лучше перейти на PostgreSQL/TimescaleDB.
+- SQLite подходит для MVP и уже работает на VPS, но для production-нагрузки позже лучше перейти на PostgreSQL/TimescaleDB.
 - Chainlink historical candles могут не давать raw ticks.
 - Chainlink Candlestick historical backfill сейчас заблокирован `401 Unauthorized` на `/api/v1/authorize`; текущие HMAC credentials работают для Streams latest reports, но не для Candlestick API.
 - Полноценный historical drill-down ограничен OHLC-признаками.
-- Realtime worker реализован как CLI/service polling worker с retry/backoff; для локального Windows MVP добавлен Task Scheduler watchdog, но полноценный production daemon на отдельном сервере пока не добавлен.
+- Realtime worker реализован как CLI/service polling worker с retry/backoff; локальный Windows watchdog оставлен как fallback, а основной 24/7 worker запущен на VPS через `systemd`.
 - Imbalance events рассчитываются batch-процессом по historical candles и автоматически обновляются worker-ом для свежих закрытых realtime-свечей `source = chainlink_streams`.
 - Frontend dashboard реализован в MVP-объеме; пока нет сохранения фильтров в URL/localStorage, pagination/virtualization таблиц и отдельного режима сравнения источников.
 - Polymarket historical слой еще не реализован и должен храниться отдельно от spot candles.
+- Внешний backup пока не настроен: ежечасные SQLite backups лежат на том же VPS.

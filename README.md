@@ -2,7 +2,7 @@
 
 MVP-дашборд для анализа 5-минутных свечей BTC, ETH и SOL. Основной источник ценовых данных в текущей версии - Chainlink.
 
-Проект находится в MVP-стадии: backend поднимается локально, база создается через Alembic, активы BTC/ETH/SOL сидятся в SQLite, а frontend уже показывает рабочий dark dashboard. Chainlink Streams realtime polling пишет тики и локальные 5-минутные свечи; historical backfill через Chainlink Candlestick API остается заблокированным отдельной авторизацией.
+Проект находится в MVP-стадии: backend поднимается локально и на VPS, база создается через Alembic, активы BTC/ETH/SOL сидятся в SQLite, а frontend показывает рабочий dark dashboard. Chainlink Streams realtime polling пишет тики и локальные 5-минутные свечи; historical backfill через Chainlink Candlestick API остается заблокированным отдельной авторизацией.
 
 ## Текущее состояние
 
@@ -54,14 +54,22 @@ MVP-дашборд для анализа 5-минутных свечей BTC, ET
   - `ops/check-local.ps1` - единый локальный predeploy-check;
   - `pyproject.toml` - базовая Ruff-конфигурация;
   - `docs/deployment-runbook.md` - гайд по Git/server deploy;
-  - `ops/linux/*.service.example` - systemd-шаблоны для API и Chainlink worker.
+  - `ops/linux/*.service.example` - systemd-шаблоны для API, frontend и Chainlink worker;
+  - `ops/linux/poly-crypto-nginx-8080.conf.example` - Nginx-шаблон для IP-доступа без домена.
+- Серверный деплой:
+  - VPS `155.212.183.185`;
+  - dashboard доступен на `http://155.212.183.185:8080`;
+  - `poly-crypto-api.service` слушает `127.0.0.1:18000`;
+  - `poly-crypto-web.service` слушает `127.0.0.1:13000`;
+  - `poly-crypto-chainlink-worker.service` собирает Chainlink Streams 24/7;
+  - `poly-crypto-db-backup.timer` делает ежечасный SQLite backup и хранит последние 48 копий.
 - Документация по источникам и допущениям.
 
 Пока не готово:
 
 - Historical backfill через Chainlink Candlestick API: текущие Streams credentials дают `401 Unauthorized` на `/api/v1/authorize`.
 - Historical слой на 90 дней из Polymarket: нужно выбрать markets/token ids и хранить их отдельно от spot candles.
-- Production 24/7 worker на сервере: локальный Windows watchdog включен, но при выключенном ПК live-история не копится; для production нужен VPS/systemd или Docker restart policy.
+- Внешний backup: ежечасный SQLite backup уже включен на VPS, но отдельного внешнего хранилища для бэкапов пока нет.
 - Сохранение frontend-фильтров в URL/localStorage, pagination/virtualization таблиц и дополнительные UX-режимы сравнения источников.
 
 ## Структура
@@ -413,32 +421,22 @@ API-ключи не хардкодим. Credentials настраиваются �
 
 ## Следующий шаг
 
-Следующий технический этап - фаза 9: hardening, тесты и стабилизация MVP.
-
-Параллельно можно продолжать накопление realtime Chainlink Streams:
-
-```powershell
-python -m app.scripts.poll_chainlink_streams --asset all --interval 10
-```
-
-Чтобы worker не зависел от открытого терминала и автоматически поднимался при входе в Windows, используй Task Scheduler wrapper:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\ops\windows\register-chainlink-worker-task.ps1
-```
-
-Если Task Scheduler вернет `Access is denied`, скрипт автоматически создаст fallback launcher в пользовательской Startup-папке Windows.
-
-Проверка задачи:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\ops\windows\status-chainlink-worker-task.ps1
-```
-
-Подробный гайд:
+Фазы 0-9 закрыты в MVP-объеме, код выгружен в Git, а серверный MVP запущен на VPS:
 
 ```text
-docs/chainlink-worker-service-guide.md
+http://155.212.183.185:8080
 ```
 
-После получения Candlestick API credentials нужно дозагрузить и сравнить Chainlink historical candles с `source = binance_klines`.
+Серверные проверки:
+
+```bash
+systemctl status poly-crypto-api
+systemctl status poly-crypto-web
+systemctl status poly-crypto-chainlink-worker
+systemctl status poly-crypto-db-backup.timer
+curl http://127.0.0.1:18000/api/status/sources
+```
+
+Локальный Windows watchdog можно оставить как резервный источник наблюдения, но основной сбор `chainlink_streams` теперь должен идти на VPS через `systemd`.
+
+Следующий продуктовый/данный шаг: получить Chainlink Candlestick API credentials, дозагрузить `source = chainlink_candlestick` и сравнить его с `source = binance_klines`. Отдельный будущий слой Polymarket CLOB/outcome-token истории нужно проектировать отдельно от spot/oracle candles.

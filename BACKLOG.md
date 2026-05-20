@@ -4,10 +4,6 @@
 
 ## P0 - ближайший этап
 
-- Вынести realtime Chainlink Streams worker на VPS/server:
-  - локальный Windows watchdog уже включен через Startup fallback, так как Task Scheduler вернул `Access is denied`;
-  - для production-нормы нужно запустить worker на сервере через `systemd` или Docker restart policy;
-  - после серверного запуска проверять `GET /api/status/sources`: `chainlink_streams.is_live`, `last_tick` и рост количества накопленных свечей.
 - Разобраться с Chainlink Candlestick credentials:
   - текущие Streams HMAC credentials работают для `/api/v1/reports/latest`;
   - `/api/v1/authorize` для Candlestick API возвращает `401 Unauthorized`;
@@ -16,8 +12,11 @@
   - запустить `python -m app.scripts.backfill --asset all --days 90`;
   - прогнать `python -m app.scripts.validate_candles --asset all --source chainlink_candlestick --days 90`;
   - сравнить расхождения с Binance `source = binance_klines`.
+- Настроить внешний backup:
+  - ежечасный SQLite backup уже включен на VPS и хранит последние 48 копий;
+  - следующий надежный шаг - копировать backup во внешнее хранилище или на второй сервер.
 
-Для локального MVP других P0-блокеров нет: dashboard, API, fallback history, realtime accumulation, тесты и check-команды готовы.
+Для MVP других P0-блокеров нет: dashboard, API, fallback history, realtime accumulation, VPS/systemd, Git и check-команды готовы.
 
 ## P0 - уже закрыто
 
@@ -103,6 +102,12 @@
   - добавлен `docs/deployment-runbook.md`;
   - добавлены systemd-шаблоны для API и Chainlink worker;
   - `npm audit --audit-level=moderate` показывает `0 vulnerabilities`.
+- MVP выгружен на VPS `155.212.183.185`:
+  - внешний dashboard: `http://155.212.183.185:8080`;
+  - `poly-crypto-api.service` активен на `127.0.0.1:18000`;
+  - `poly-crypto-web.service` активен на `127.0.0.1:13000`;
+  - `poly-crypto-chainlink-worker.service` активен и пишет Chainlink Streams ticks;
+  - `poly-crypto-db-backup.timer` активен и делает ежечасный SQLite backup.
 - Выполнена контрольная проверка локального состояния после фазы 8:
   - `npm run lint`;
   - `npm run test`;
@@ -150,6 +155,9 @@
 
 ## P3 - инфраструктура и качество
 
+- Разобрать свежий `npm audit` на сервере:
+  - после серверного `npm ci` registry показывает 2 moderate warnings по `postcss < 8.5.10` через `next@15.5.18`;
+  - автоматический `npm audit fix --force` не применять без проверки, потому что он предлагает breaking change.
 - Расширить frontend-тесты: сейчас `npm run test` является typecheck-командой, а не набором unit/UI-тестов.
 - Добавить больше API/integration tests для edge-cases:
   - пустые выборки;

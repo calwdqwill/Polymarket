@@ -495,9 +495,17 @@ python -m app.scripts.poll_chainlink_streams --asset all --interval 10
   - `docs/deployment-runbook.md`.
 - Добавлены systemd-шаблоны:
   - `ops/linux/poly-crypto-api.service.example`;
-  - `ops/linux/poly-crypto-chainlink-worker.service.example`.
+  - `ops/linux/poly-crypto-chainlink-worker.service.example`;
+  - `ops/linux/poly-crypto-web.service.example`;
+  - `ops/linux/poly-crypto-nginx-8080.conf.example`.
 - `npm audit --audit-level=moderate` показал `0 vulnerabilities`.
 - Полный `ops/check-local.ps1` прошел успешно вне sandbox: backend compile, 24 tests, frontend lint/typecheck/build, API health.
+- MVP выгружен на VPS `155.212.183.185`:
+  - внешний URL: `http://155.212.183.185:8080`;
+  - API работает через `poly-crypto-api.service` на `127.0.0.1:18000`;
+  - frontend работает через `poly-crypto-web.service` на `127.0.0.1:13000`;
+  - Chainlink worker работает через `poly-crypto-chainlink-worker.service` и продолжает писать ticks;
+  - `poly-crypto-db-backup.timer` делает ежечасный SQLite backup и хранит последние 48 копий.
 
 Критерий готовности:
 
@@ -508,5 +516,5 @@ python -m app.scripts.poll_chainlink_streams --asset all --interval 10
 Оставшиеся внешние блокеры вне локального MVP:
 
 - Chainlink Candlestick historical credentials.
-- VPS/server для 24/7 Chainlink worker.
-- Git remote и серверные доступы для фактической выкладки.
+- Внешний backup для SQLite/будущей PostgreSQL базы.
+- Historical слой Polymarket CLOB/outcome-token данных, если он нужен как отдельный источник, а не spot/oracle candles.

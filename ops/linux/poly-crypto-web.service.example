@@ -1,0 +1,17 @@
+[Unit]
+Description=Poly Crypto Next.js dashboard
+After=network-online.target poly-crypto-api.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=polycrypto
+WorkingDirectory=/opt/poly_crypto/apps/web
+Environment=NODE_ENV=production
+Environment=NEXT_PUBLIC_API_BASE_URL=http://SERVER_IP:8080
+ExecStart=/usr/bin/npm run start -- -H 127.0.0.1 -p 13000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

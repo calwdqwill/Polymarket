@@ -8,7 +8,7 @@ Type=simple
 User=polycrypto
 WorkingDirectory=/opt/poly_crypto/services/api
 EnvironmentFile=/opt/poly_crypto/services/api/.env
-ExecStart=/opt/poly_crypto/services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+ExecStart=/opt/poly_crypto/services/api/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 18000
 Restart=always
 RestartSec=5
 
