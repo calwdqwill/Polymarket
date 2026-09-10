@@ -1,0 +1,21 @@
+[Unit]
+Description=Read-only host metrics and prediction-only resource stop
+[Service]
+Type=oneshot
+Slice=prediction.slice
+WorkingDirectory=/opt/poly-crypto-prediction/current/services/api
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+UMask=0027
+LimitNOFILE=4096
+ExecStart=/opt/poly-crypto-prediction/current/.venv/bin/python -m app.scripts.check_prediction_health
+MemoryMax=96M
+TasksMax=16
+TimeoutStartSec=20
+ReadWritePaths=/var/lib/poly-crypto-prediction/state

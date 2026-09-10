@@ -1,0 +1,32 @@
+[Unit]
+Description=Bounded public BTC prediction collector
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=prediction
+Group=prediction
+Slice=prediction.slice
+WorkingDirectory=/opt/poly-crypto-prediction/current/services/api
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+UMask=0027
+LimitNOFILE=4096
+EnvironmentFile=/etc/poly-crypto-prediction/collector.conf
+ExecStart=/opt/poly-crypto-prediction/current/.venv/bin/python -m app.scripts.run_prediction_service --seconds ${PREDICTION_SECONDS}
+Restart=no
+RuntimeMaxSec=7250
+TimeoutStopSec=30
+KillSignal=SIGTERM
+MemoryHigh=1280M
+MemoryMax=1536M
+MemorySwapMax=0
+TasksMax=64
+RuntimeDirectory=poly-crypto-prediction
+ReadWritePaths=/var/lib/poly-crypto-prediction /run/poly-crypto-prediction

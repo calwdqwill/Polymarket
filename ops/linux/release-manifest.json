@@ -1,0 +1,302 @@
+[
+  {
+    "path": "AGENTS.md",
+    "bytes": 3879,
+    "sha256": "2c161b47b7c8c3ce859e31c9fa768fcc5a047eab5813f531733bfad7a825a43b"
+  },
+  {
+    "path": "LIVE_SHADOW_INFRASTRUCTURE_PLAN.md",
+    "bytes": 56491,
+    "sha256": "47553ef137984b20411fd31d01bef281893013ca6d9bdd18e2793c8253c9c68a"
+  },
+  {
+    "path": "SHARED_VPS_AUDIT_2.25.143.143.md",
+    "bytes": 40211,
+    "sha256": "3d0ec3a2abc4945f07e548f9352b89249fe946f17afffa342a90b7f9830a1dee"
+  },
+  {
+    "path": "docs/prediction-collector-runbook.md",
+    "bytes": 17949,
+    "sha256": "16bb09cbe04a0d60f8c21e66fdb1b10c886bcbc84f7528db1b51e73a0b8fdca9"
+  },
+  {
+    "path": "docs/prediction-cross-venue-audit.md",
+    "bytes": 50018,
+    "sha256": "97abd73e4235bf763c6ccc8bff48610646f52c15d86764f7aa8d418a0b23a920"
+  },
+  {
+    "path": "docs/prediction-finalization-fix.md",
+    "bytes": 9263,
+    "sha256": "2dea54feb987f17299d728972c9039c8278bab2de7a38313a9feacc4beaae759"
+  },
+  {
+    "path": "docs/prediction-first-probe.md",
+    "bytes": 16442,
+    "sha256": "3ac02fc34549e746557525d9bf5ea4d799aede282fe559639cafb31189d4c50a"
+  },
+  {
+    "path": "docs/prediction-linux-runbook.md",
+    "bytes": 5030,
+    "sha256": "578bf6af58638828a6285f8e203092b488c1aa1014b4db9847941d75e5528503"
+  },
+  {
+    "path": "docs/prediction-live-report.md",
+    "bytes": 17041,
+    "sha256": "c5e164cdba911a3671c3405b11519ba9474056e5fac67c243648dddc03552bf9"
+  },
+  {
+    "path": "docs/prediction-recovery.md",
+    "bytes": 8327,
+    "sha256": "7821654bc6fd5b2d5df4139f7657fe30057abcc67e4f573e411970ee3f5c8323"
+  },
+  {
+    "path": "docs/prediction-settlement-update.md",
+    "bytes": 16445,
+    "sha256": "c9a7b13040d9a0adcb1847e28fd3f8592293159e940d620f73439eb247f92097"
+  },
+  {
+    "path": "docs/prediction-stabilization-report.md",
+    "bytes": 27067,
+    "sha256": "26252fab82d5ab2abe9c43f023056b2abc569b724a23fc36c432a734db1b70dd"
+  },
+  {
+    "path": "ops/linux/collector.conf.example",
+    "bytes": 61,
+    "sha256": "ce49e29779beae4191a971ec6661f7ef484780c6c99d1559e146ca80f9a6aaea"
+  },
+  {
+    "path": "ops/linux/prediction-collector.service",
+    "bytes": 904,
+    "sha256": "c681ba0b8758e1e2c7c8b0a876c12ec21f9488fdd2a18ef6a1fd43facf3a425f"
+  },
+  {
+    "path": "ops/linux/prediction-health.service",
+    "bytes": 598,
+    "sha256": "9f6df2151239226eab3df507279cd9799d4e8dd47f469dcc923e2a02c4079e80"
+  },
+  {
+    "path": "ops/linux/prediction-health.timer",
+    "bytes": 137,
+    "sha256": "13274e78cff42bd66f08109aab5d85593452a63ba00580d471bfc3e993230930"
+  },
+  {
+    "path": "ops/linux/prediction-status.service",
+    "bytes": 581,
+    "sha256": "e418cdafbda97aed2a8d1bce8ab6a57bdbeb1817e5860dca870adaabfeed64f7"
+  },
+  {
+    "path": "ops/linux/prediction.slice",
+    "bytes": 218,
+    "sha256": "c72dd9287b9f0bb58810763c0cd9739b28396a17f7faea349d286d7be1a02490"
+  },
+  {
+    "path": "pyproject.toml",
+    "bytes": 248,
+    "sha256": "1d807561206b5090cc59d2d6d3713eb23bf40c16283e1f765dee2e800c102d2b"
+  },
+  {
+    "path": "services/api/app/__init__.py",
+    "bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "path": "services/api/app/prediction/__init__.py",
+    "bytes": 79,
+    "sha256": "004bb980e1faff618e251abf0e4b6f71ad2ffff3779555debbe57d0ed6895f78"
+  },
+  {
+    "path": "services/api/app/prediction/books.py",
+    "bytes": 6762,
+    "sha256": "0816eaef17ec272f46f44e25c78946ea7badf000b221427e35edb394c1ca6666"
+  },
+  {
+    "path": "services/api/app/prediction/discovery.py",
+    "bytes": 8617,
+    "sha256": "e358104a4e1e75b0362702a3c5bfcf3766e0c2e9f8fb5c86f261687a6b622dee"
+  },
+  {
+    "path": "services/api/app/prediction/live_screen.py",
+    "bytes": 2762,
+    "sha256": "1dc991c2591786cda8a94aabbf749b45ed56a64043d213cc3234fcc87ce05a1e"
+  },
+  {
+    "path": "services/api/app/prediction/live_storage.py",
+    "bytes": 6350,
+    "sha256": "6dfb6c499d0da2b4dcdc1691cfeb656339e80b246962f8062991fe51bab8258f"
+  },
+  {
+    "path": "services/api/app/prediction/live_transport.py",
+    "bytes": 13440,
+    "sha256": "7188701cc0174a54b068e7288f7b6d0d1750f3ac5bfa3a883c4be172602c3ad4"
+  },
+  {
+    "path": "services/api/app/prediction/models.py",
+    "bytes": 5381,
+    "sha256": "3dd308bc7f8b0a610f678de95421975d36cf47481f41def382c8ef97afb93f31"
+  },
+  {
+    "path": "services/api/app/prediction/observer.py",
+    "bytes": 8115,
+    "sha256": "7edc546f43e4cab1aa1bcc8b2db0007db9a7efea66bcf15e6ef70690bf4fb487"
+  },
+  {
+    "path": "services/api/app/prediction/research_statistics.py",
+    "bytes": 6942,
+    "sha256": "c591bf7d5ad99fe1bbfa27a4dc6c3580b8bcfd9ae0ceea73b49aeef78ec8a247"
+  },
+  {
+    "path": "services/api/app/prediction/screen.py",
+    "bytes": 4005,
+    "sha256": "c93a03149acb83e458ce4e17ad4b000260d6dc90cb9cc434de48e59d59aa45e4"
+  },
+  {
+    "path": "services/api/app/prediction/service_runtime.py",
+    "bytes": 3752,
+    "sha256": "6e2bb25a4188c99e52765eea14e3eb97f54a181685476e527d88de43076d2d4a"
+  },
+  {
+    "path": "services/api/app/prediction/storage.py",
+    "bytes": 2256,
+    "sha256": "66fd2e09d61d9a1f1f6c1474a483092030efaafaeb3309d8dacd3326ff6919ba"
+  },
+  {
+    "path": "services/api/app/scripts/__init__.py",
+    "bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "path": "services/api/app/scripts/analyze_prediction.py",
+    "bytes": 11645,
+    "sha256": "1953ac31aa021d3b14e853fb3e8617e539714f608bb85bb72b3ccb7ce6631572"
+  },
+  {
+    "path": "services/api/app/scripts/analyze_prediction_research.py",
+    "bytes": 21109,
+    "sha256": "5fb64dad6e6571451ddee6c441ae844ea85cdd60a735fd2424b9ba4af10be807"
+  },
+  {
+    "path": "services/api/app/scripts/audit_prediction_desync.py",
+    "bytes": 7004,
+    "sha256": "7ea13424174bb6631c4f15989c641f54a0f99ddf39c58f0db311f8d7515e98bd"
+  },
+  {
+    "path": "services/api/app/scripts/check_prediction_health.py",
+    "bytes": 1876,
+    "sha256": "c6f4bd9e1b9f51a74bf1dd569e952920d50070410dddedacf59afde850a4d77d"
+  },
+  {
+    "path": "services/api/app/scripts/collect_prediction.py",
+    "bytes": 10476,
+    "sha256": "7b6e9e405cfc1b70f5638c557355bfbc75cb6b0fa6e80cecbab0451dfb33576e"
+  },
+  {
+    "path": "services/api/app/scripts/finish_prediction_research.py",
+    "bytes": 3262,
+    "sha256": "16eaa33f223f0ee7e647889b1247f20493db632a2ffa21b012234b5c5602c675"
+  },
+  {
+    "path": "services/api/app/scripts/freeze_prediction.py",
+    "bytes": 2794,
+    "sha256": "855557695de258f41f0d3e3223727f84f36dff9decb6f4e45597332c556aed1f"
+  },
+  {
+    "path": "services/api/app/scripts/prediction_finalization_io.py",
+    "bytes": 6224,
+    "sha256": "56b595d252fe8328f81c2fa4bff2e8170ae1881256f8cc536d2d91190d3fa493"
+  },
+  {
+    "path": "services/api/app/scripts/probe_prediction.py",
+    "bytes": 3048,
+    "sha256": "b26c0b2f10304444b3881468bfa415ccdb92aa90e42ad7d3a45966e6cc17a612"
+  },
+  {
+    "path": "services/api/app/scripts/recover_prediction.py",
+    "bytes": 6274,
+    "sha256": "9bdcace4e28b6e1400138151bfb9ad341ca204f73734630481f15181c9c263d2"
+  },
+  {
+    "path": "services/api/app/scripts/repair_prediction_episode_timestamps.py",
+    "bytes": 3756,
+    "sha256": "7be286d42fa76405e24f5d1d9c4f2b401f3ae21afb13a22e5e71d23b3bd07284"
+  },
+  {
+    "path": "services/api/app/scripts/replay_prediction.py",
+    "bytes": 9778,
+    "sha256": "b2d613bab1dea5d3ef26922e30bed250ae073bf4836bdcb0ffab10727509c7f0"
+  },
+  {
+    "path": "services/api/app/scripts/report_prediction_recovery.py",
+    "bytes": 47904,
+    "sha256": "38e7f0585b91ec28eb6cf748eddb17e259c94bf0bbb6d5f7a77674261927a083"
+  },
+  {
+    "path": "services/api/app/scripts/report_prediction_research.py",
+    "bytes": 23155,
+    "sha256": "c1c8486d2d87952f465e341c0fb5e68ac7b16c5a81e44dbe5ec963bc5ba625bf"
+  },
+  {
+    "path": "services/api/app/scripts/run_prediction_service.py",
+    "bytes": 1693,
+    "sha256": "ba63e06954f3c5f46e69124a2f36414d28ac4b76d7ea626a3fd5952c724a827d"
+  },
+  {
+    "path": "services/api/app/scripts/serve_prediction_status.py",
+    "bytes": 851,
+    "sha256": "14616275de887139d95d08545f92cb9ca57ecd13f9dcf167bd6c234df3793f49"
+  },
+  {
+    "path": "services/api/app/scripts/verify_prediction_observations.py",
+    "bytes": 13252,
+    "sha256": "772dfd813f71ae698e78b80e44c87b8e8c491bde800dca9fb6999bcdcbf611ae"
+  },
+  {
+    "path": "services/api/requirements-dev.txt",
+    "bytes": 32,
+    "sha256": "c4109ae59a526467f85d2e5b1db9e52521e39ac9663cb1ed3199409ec5694666"
+  },
+  {
+    "path": "services/api/requirements.txt",
+    "bytes": 155,
+    "sha256": "975a57d966f2c75aeda2fc6127facc5c7fddfbbc7d0b16fe9bf95856c17638e3"
+  },
+  {
+    "path": "services/api/tests/__init__.py",
+    "bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "path": "services/api/tests/fixtures/prediction_metadata.json",
+    "bytes": 13571,
+    "sha256": "d50c7838c50b83b81f78b00c1ecd91803b43d1e4b0cbc2a1b5a7b2092d469a7f"
+  },
+  {
+    "path": "services/api/tests/test_prediction.py",
+    "bytes": 11607,
+    "sha256": "4e89c052409309f350734f467d3362af1519ec6b42e00c77b82022c2d3a84200"
+  },
+  {
+    "path": "services/api/tests/test_prediction_finalization.py",
+    "bytes": 11584,
+    "sha256": "4fde0eceb856ac988b87293539d32ef2d6caffc3a5d6f465bb6d76a4e67b7d05"
+  },
+  {
+    "path": "services/api/tests/test_prediction_live.py",
+    "bytes": 15295,
+    "sha256": "fbaae2d266d9f8ae9b34aafea945f236e45840f708cc3702bc32bf09392ee88c"
+  },
+  {
+    "path": "services/api/tests/test_prediction_recovery.py",
+    "bytes": 10141,
+    "sha256": "7eb3476e8494b143dfc72f14ebd1eea2a7705cc3d5e7ea53efa491bddbc09954"
+  },
+  {
+    "path": "services/api/tests/test_prediction_research.py",
+    "bytes": 12409,
+    "sha256": "6352dc87a49114153c156cb8a267ee524a7cbdaa3aee3522dea1e84ea25caa08"
+  },
+  {
+    "path": "services/api/tests/test_prediction_service.py",
+    "bytes": 2433,
+    "sha256": "eda1ceec0d83943ebd7a07ff3cafe9cd261d84d8c5bbebad6b87503b764b074b"
+  }
+]

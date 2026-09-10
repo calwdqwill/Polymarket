@@ -1,0 +1,24 @@
+[Unit]
+Description=Loopback prediction status
+[Service]
+Type=simple
+User=prediction
+Group=prediction
+Slice=prediction.slice
+WorkingDirectory=/opt/poly-crypto-prediction/current/services/api
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+UMask=0027
+LimitNOFILE=4096
+ExecStart=/opt/poly-crypto-prediction/current/.venv/bin/python -m app.scripts.serve_prediction_status
+Restart=no
+MemoryMax=64M
+TasksMax=8
+IPAddressDeny=any
+IPAddressAllow=localhost

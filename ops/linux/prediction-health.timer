@@ -1,0 +1,7 @@
+[Unit]
+Description=Bounded staging health sampling
+[Timer]
+OnActiveSec=1
+OnUnitActiveSec=15
+AccuracySec=1
+Unit=prediction-health.service

@@ -1,0 +1,13 @@
+[Unit]
+Description=Isolated public prediction staging
+[Slice]
+CPUQuota=60%
+CPUWeight=20
+MemoryHigh=1536M
+MemoryMax=1792M
+MemorySwapMax=0
+TasksMax=128
+IOWeight=20
+CPUAccounting=yes
+MemoryAccounting=yes
+IOAccounting=yes
