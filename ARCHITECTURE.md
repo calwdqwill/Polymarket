@@ -1,5 +1,11 @@
 # Архитектура проекта
 
+## Локальный shadow engine — отдельный development track
+
+`shadow_models.py` задаёт frozen `micro_arb_v0` и immutable event/book/window contracts. `shadow_engine.py` потребляет receive-ordered события и watermarks, отдельно моделирует 100/250 ms arrival/ACK и держит независимые consumption ledgers. Финансовые Decimal-функции `target_profit`/`execution_fees` сохранены. Новый вход требует четырёх VALID books; retry — наблюдаемого below-threshold crossing после ACK без переноса через gap.
+
+`ShadowJournalRepository` отделяет domain от хранения: in-memory и exclusive append-only JSONL с fsync; основная БД не меняется. `shadow_replay.py` адаптирует historical receive cache без future lookups из engine. CLI replay/verify/audit сравнивают только frozen profile V1, сохраняют отдельные журналы и provenance. Collector, transport и VPS этим треком не интегрируются. [Контракт, причинность и ограничения](LIVE_SHADOW_ENGINE_DESIGN.md).
+
 ## Изолированный Linux collector staging — 10 сентября 2026
 
 Prediction collector развёрнут отдельным release/venv под пользователем `prediction`; loopback status и health timer находятся в `prediction.slice`, основная БД/web/соседние containers не менялись. `Restart=no`, bounded duration и Linux owner flock отделяют lifecycle от SSH/Codex; source release `229aff0`.

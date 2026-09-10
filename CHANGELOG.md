@@ -1,5 +1,13 @@
 # Changelog
 
+## 10 сентября 2026 — локальный shadow engine, Iteration 1
+
+- Создана ветка `codex/prediction-live-shadow`; существующие research и параллельные collector-изменения сохранены.
+- Добавлены immutable config/events, forward-only state machine, independent 100/250 ms ledgers, attempt/window journal и append-only local storage. Денежные функции V1 переиспользованы.
+- Зафиксированы строгий below-threshold retry, four-book validity gate, causal arrival/ACK и сохранение previous losses. Пустые окна также записываются.
+- Добавлены 30 synthetic tests, historical replay CLI, независимый verifier и объяснение parity. 122 окна / 6 890 599 receive rows проверены дважды; 194 attempts/388 legs прошли independent verification. Общий backend suite 158/158, Ruff и compileall PASS. 183 общие попытки имеют точный net V1; 13 отвергнутых старых signals объяснены safety/crossing/cap. [Design и результаты](LIVE_SHADOW_ENGINE_DESIGN.md).
+- Production collector/VPS/основная БД/API/frontend этим треком не изменялись. Iteration 2/3 не начаты; после отчёта STOP.
+
 ## 2026-09-10 — Linux shared staging Iteration 2A
 
 Изолированный релиз `229aff0` прошёл 30m smoke и 2h capacity на общем VPS. Раннее снятие VALID перед async close, ограниченный receive backlog, incremental metrics, fsync и systemd resource/disk guards проверены. Итог **PASS_WITH_LIMITS** для отдельного 24h collector-only.

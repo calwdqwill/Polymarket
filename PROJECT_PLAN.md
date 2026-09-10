@@ -1,5 +1,11 @@
 # План проекта по фазам
 
+## Параллельный локальный трек — shadow engine Iteration 1
+
+В ветке `codex/prediction-live-shadow` завершены локальный `micro_arb_v0`, forward-only event consumer, независимые 100/250 ms ledgers и журнал. 122 historical окна воспроизведены дважды с одинаковыми журналами; verifier и 158 backend tests PASS. [Design и итог проверки](LIVE_SHADOW_ENGINE_DESIGN.md) объясняют 11 scenario-window расхождений с V1 и отделяют replay от live readiness. На VPS shadow не подключён; работающий collector-трек не изменяется этим заданием.
+
+После отчёта STOP. Iteration 2 (dashboard/local API) и Iteration 3 (execution API preflight/fees/settlement) требуют отдельных подтверждений. Ниже сохранён план независимого collector-трека и история проекта.
+
 ## Текущий этап — Linux shared staging Iteration 2A завершён
 
 10 сентября выполнены полные 30m smoke и 2h capacity на изолированном systemd collector. Итог **PASS_WITH_LIMITS для 24h collector-only**: coverage 99,19% (строгая 2s — 66,03%), 2 575 247 raw frames и 30 618 461 priced rows проверены без расхождений. Все prediction units остановлены. [Полный отчёт](LIVE_SHADOW_DEPLOYMENT_REPORT.md).

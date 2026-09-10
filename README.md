@@ -1,5 +1,19 @@
 # Крипто-дашборд
 
+## Локальный shadow engine и журнал
+
+Добавлен отдельный локальный consumer для `micro_arb_v0`: BTC 5m, Q10 retained, edge 10–15c, цель $0,50, независимые 100/250 ms. [Полный контракт, результаты и ограничения](LIVE_SHADOW_ENGINE_DESIGN.md). Он не подключён к VPS и не читает `live.json` как источник событий. Orders и dashboard этой итерацией не запускаются.
+
+Из `services/api`, только на локальных historical данных, в новый output-каталог:
+
+```powershell
+.venv/Scripts/python.exe -m app.scripts.replay_prediction_shadow ../../target-profit-research-v1 data/prediction/recovery-20260910/dataset ../../shadow-engine-v1-new --workers 3
+.venv/Scripts/python.exe -m app.scripts.verify_prediction_shadow ../../shadow-engine-v1-new
+.venv/Scripts/python.exe -m app.scripts.audit_prediction_shadow ../../target-profit-research-v1 ../../shadow-engine-v1-new
+```
+
+Каждую следующую команду выполнять после успешного завершения предыдущей. Для smoke — `--limit 1`; это не полный dataset gate. Полный replay дважды воспроизводит каждое разрешённое окно, сверяет hashes и frozen reference V1. Зависимости/env/основная SQLite не меняются. JSONL хранит audit попыток и окон, а raw остаётся в исходном storage. Новое изменение `.env` не требуется.
+
 ## Linux shared staging — актуальный результат 10 сентября 2026
 
 Завершены 30m smoke и 2h collector-only на VPS: **PASS_WITH_LIMITS** для отдельно разрешаемого 24h. [Отчёт с coverage, lag, ресурсами и replay](LIVE_SHADOW_DEPLOYMENT_REPORT.md), [Linux runbook](docs/prediction-linux-runbook.md). Все prediction services/timer остановлены; 24h, shadow и orders не запускались.

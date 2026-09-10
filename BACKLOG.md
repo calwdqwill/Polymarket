@@ -1,5 +1,12 @@
 # Backlog
 
+## Локальный shadow development track — Iteration 1
+
+- Закрыто: frozen config, typed events/local transport, forward engine, independent latency ledgers, attempt/window journal и storage abstraction. 122 окна воспроизведены дважды; independent verifier PASS, 158 backend tests PASS. Parity 117/122 и 116/122; все различия объяснены. [Отчёт](LIVE_SHADOW_ENGINE_DESIGN.md).
+- Только после отдельного подтверждения Iteration 2: раздел Prediction Arb в существующем dashboard, локальные read API, timeline попытки, история окон и раздельные 100/250 ms statistics.
+- До подключения live: проверенный event producer с session/connection/version, watermarks и bounded lag; тесты restart/durable journal, source release allowlist, успешный 24h collector gate и отдельное разрешение интеграции.
+- Fee/minimum/taker-delay/settlement closure и signing/API preflight остаются Iteration 3, также после отдельного задания. Orders не разрешены.
+
 ## После Linux shared staging — 10 сентября 2026
 
 - Закрыто: release allowlist/SHA-256, изолированный Python 3.12/systemd, ранняя invalidation, bounded metrics/receive queue, resource guards, фактические 30m + 2h, off-host copy и полный replay. [Отчёт](LIVE_SHADOW_DEPLOYMENT_REPORT.md): **PASS_WITH_LIMITS**.
