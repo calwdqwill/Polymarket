@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-10 — Linux shared staging Iteration 2A
+
+Изолированный релиз `229aff0` прошёл 30m smoke и 2h capacity на общем VPS. Раннее снятие VALID перед async close, ограниченный receive backlog, incremental metrics, fsync и systemd resource/disk guards проверены. Итог **PASS_WITH_LIMITS** для отдельного 24h collector-only.
+
+В 2h: 99,19% coverage, CPU 41,71% mean / 58,48% max sample, minimum MemAvailable 4,98 GB, без OOM/overflow. SHA-256 всех 1661 файлов и CRC 1656 gzip подтверждены; 2 575 247 raw frames, 11 043 checkpoints и 30 618 461 priced rows без расхождений. Отмечены lag/neighbor-health ограничения и 4 conservative strategy exclusions. Collector/status/health остановлены, новых запусков нет. [Отчёт A–K](LIVE_SHADOW_DEPLOYMENT_REPORT.md).
+
 Все заметные изменения проекта фиксируем здесь.
 
 ## 2026-05-20

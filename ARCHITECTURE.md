@@ -1,5 +1,11 @@
 # Архитектура проекта
 
+## Изолированный Linux collector staging — 10 сентября 2026
+
+Prediction collector развёрнут отдельным release/venv под пользователем `prediction`; loopback status и health timer находятся в `prediction.slice`, основная БД/web/соседние containers не менялись. `Restart=no`, bounded duration и Linux owner flock отделяют lifecycle от SSH/Codex; source release `229aff0`.
+
+Raw-before-apply writer использует incremental byte counters и bounded 300-second bins, flush/fsync и SHA-256 закрытых файлов. Parsed WebSocket receive queue ограничена 512 frames/8 MiB; overflow и transport failure снимают VALID до ожидания close. CPU/RAM/disk guards останавливают только prediction; raw не удаляется. После фактических 30m + 2h все prediction units остановлены. [Измерения и ограничения](LIVE_SHADOW_DEPLOYMENT_REPORT.md).
+
 Документ описывает текущую архитектуру MVP крипто-дашборда для анализа 5-минутных свечей BTC, ETH и SOL.
 
 ## Цель системы

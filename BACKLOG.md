@@ -1,5 +1,13 @@
 # Backlog
 
+## После Linux shared staging — 10 сентября 2026
+
+- Закрыто: release allowlist/SHA-256, изолированный Python 3.12/systemd, ранняя invalidation, bounded metrics/receive queue, resource guards, фактические 30m + 2h, off-host copy и полный replay. [Отчёт](LIVE_SHADOW_DEPLOYMENT_REPORT.md): **PASS_WITH_LIMITS**.
+- Перед отдельным 24h: свежий disk/resource gate и явное изменение staging duration cap 7200 s; при ×3 write rate 24h займёт около 17,25 GB, запас до текущего data cap ограничен. Ничего автоматически не запускать.
+- Для безусловного gate: сохранять per-message receive lag quantiles; исследовать CPU throttling, queue peak 442/512 и durable shutdown tail 6,73 s. Сейчас runtime не менять.
+- Подготовить длительный baseline соседей и прикладные SLO: ABC collector/observer health нестабилен до и во время staging; Traefik restart loop существовал ранее. Не исправлять соседей в prediction scope.
+- Сохранять 4 conservative strategy exclusions и UNKNOWN settlement/fees. Collector-only verdict не разрешает shadow/orders.
+
 Техдолг и следующие задачи по MVP.
 
 ## P0 - ближайший этап

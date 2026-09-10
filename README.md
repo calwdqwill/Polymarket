@@ -1,5 +1,11 @@
 # Крипто-дашборд
 
+## Linux shared staging — актуальный результат 10 сентября 2026
+
+Завершены 30m smoke и 2h collector-only на VPS: **PASS_WITH_LIMITS** для отдельно разрешаемого 24h. [Отчёт с coverage, lag, ресурсами и replay](LIVE_SHADOW_DEPLOYMENT_REPORT.md), [Linux runbook](docs/prediction-linux-runbook.md). Все prediction services/timer остановлены; 24h, shadow и orders не запускались.
+
+Текущий Linux launcher намеренно ограничен 7200 s; увеличение длительности требует отдельного задания и свежего preflight. Перцентили receive lag не сохраняются, а health соседей нестабилен в baseline: инфраструктурный verdict не является разрешением торгового исполнения. Старые команды и этапы ниже приведены как история/справка.
+
 MVP-дашборд для анализа 5-минутных свечей BTC, ETH и SOL. Основной источник ценовых данных в текущей версии - Chainlink.
 
 Проект находится в MVP-стадии: backend поднимается локально и на VPS, база создается через Alembic, активы BTC/ETH/SOL сидятся в SQLite, а frontend показывает рабочий dark dashboard. Chainlink Streams realtime polling пишет тики и локальные 5-минутные свечи; historical backfill через Chainlink Candlestick API остается заблокированным отдельной авторизацией.

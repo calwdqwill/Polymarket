@@ -1,5 +1,11 @@
 # План проекта по фазам
 
+## Текущий этап — Linux shared staging Iteration 2A завершён
+
+10 сентября выполнены полные 30m smoke и 2h capacity на изолированном systemd collector. Итог **PASS_WITH_LIMITS для 24h collector-only**: coverage 99,19% (строгая 2s — 66,03%), 2 575 247 raw frames и 30 618 461 priced rows проверены без расхождений. Все prediction units остановлены. [Полный отчёт](LIVE_SHADOW_DEPLOYMENT_REPORT.md).
+
+Следующий этап — только отдельно разрешённый 24h collector-only после свежего preflight и согласования изменения текущего лимита 7200 s. Ограничения: receive quantiles отсутствуют, peak queue 442/512, shutdown durable lag 6,73 s, baseline health соседей нестабилен; 4 strategy windows исключены verifier. Shadow/orders не разрешены. Ниже сохранена история предыдущих этапов.
+
 План описывает поэтапную реализацию MVP крипто-дашборда.
 
 ## Фаза 0 - исследование источников

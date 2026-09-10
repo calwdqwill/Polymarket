@@ -1,0 +1,587 @@
+{
+  "decision": "PASS_WITH_LIMITS",
+  "scope": "24h collector-only candidate; separate authorization and fresh preflight required",
+  "source_commit": "229aff03993a6a66cf978c0b07aa13ca197c140b",
+  "run_id": "20260910T092622Z-1efcb0c72bc1",
+  "started": "2026-09-10T09:26:22.098535+00:00",
+  "finished": "2026-09-10T11:26:28.828787+00:00",
+  "metrics": {
+    "duration_seconds": 7206.739657617,
+    "receive_queue": {
+      "queue_items": 0,
+      "queue_bytes": 0,
+      "oldest_age_ms": 0,
+      "scope": "Parsed WS data frames through completed recv; excludes TCP/TLS pre-parser age",
+      "peak_items": 442,
+      "peak_bytes": 274980,
+      "peak_age_ms": 5010.803713,
+      "max_processing_lag_ms": 1667.359437
+    },
+    "writer": {
+      "mode": "synchronous_raw_before_apply",
+      "max_durable_lag_ms": 6729.352541,
+      "max_flush_ms": 107.85381,
+      "queue_items": 0,
+      "queue_bytes": 0,
+      "oldest_age_ms": 0,
+      "pending_durable_items": 0,
+      "pending_durable_bytes": 0,
+      "durable_lag_ms": 0,
+      "processing_lag_ms": 0.025751,
+      "receive_queue_scope": "receive_queue measures parsed frames; TCP arrival age unavailable"
+    },
+    "gzip_mb_per_hour": 239.62913539893793,
+    "active_segment": 120,
+    "streams": {
+      "windows": {
+        "messages": 25,
+        "bytes": 6664,
+        "stored_bytes": 6117,
+        "messages_per_second_mean": 0.003468975041102923,
+        "messages_per_second_p95": 0,
+        "bytes_per_second": 0.9246899869563951,
+        "mb_per_hour": 0.003328883953043023,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "observations": {
+        "messages": 2373763,
+        "bytes": 3341627777,
+        "stored_bytes": 124468138,
+        "messages_per_second_mean": 329.38098401974395,
+        "messages_per_second_p95": 603,
+        "bytes_per_second": 463680.9342027698,
+        "mb_per_hour": 1669.2513631299712,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "raw_http": {
+        "messages": 2678,
+        "bytes": 13128002,
+        "stored_bytes": 1503679,
+        "messages_per_second_mean": 0.3715966064029451,
+        "messages_per_second_p95": 3,
+        "bytes_per_second": 1821.6284511019703,
+        "mb_per_hour": 6.5578624239670935,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "markets": {
+        "messages": 2110,
+        "bytes": 5748491,
+        "stored_bytes": 503206,
+        "messages_per_second_mean": 0.2927814934690867,
+        "messages_per_second_p95": 4,
+        "bytes_per_second": 797.6548721201914,
+        "mb_per_hour": 2.8715575396326893,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "matches": {
+        "messages": 1032,
+        "bytes": 839903,
+        "stored_bytes": 93118,
+        "messages_per_second_mean": 0.14319928969672865,
+        "messages_per_second_p95": 2,
+        "bytes_per_second": 116.54410175789874,
+        "mb_per_hour": 0.41955876632843553,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "connections": {
+        "messages": 128,
+        "bytes": 41322,
+        "stored_bytes": 17961,
+        "messages_per_second_mean": 0.017761152210446968,
+        "messages_per_second_p95": 0,
+        "bytes_per_second": 5.7337994659381994,
+        "mb_per_hour": 0.020641678077377518,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "transport_sent": {
+        "messages": 2224,
+        "bytes": 734101,
+        "stored_bytes": 146075,
+        "messages_per_second_mean": 0.30860001965651607,
+        "messages_per_second_p95": 1,
+        "bytes_per_second": 101.86312186594787,
+        "mb_per_hour": 0.36670723871741234,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "raw_ws_polymarket": {
+        "messages": 2539444,
+        "bytes": 2748333706,
+        "stored_bytes": 318684216,
+        "messages_per_second_mean": 352.3707141711429,
+        "messages_per_second_p95": 621,
+        "bytes_per_second": 381356.04122943594,
+        "mb_per_hour": 1372.8817484259694,
+        "payload_bytes": 1781705258,
+        "payload_bytes_per_second": 247227.64282415377
+      },
+      "checkpoints_polymarket": {
+        "messages": 10202,
+        "bytes": 57344983,
+        "stored_bytes": 5915017,
+        "messages_per_second_mean": 1.4156193347732808,
+        "messages_per_second_p95": 4,
+        "bytes_per_second": 7957.1325903788575,
+        "mb_per_hour": 28.645677325363884,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "raw_ws_limitless": {
+        "messages": 35803,
+        "bytes": 25583336,
+        "stored_bytes": 1808110,
+        "messages_per_second_mean": 4.967988535864318,
+        "messages_per_second_p95": 10,
+        "bytes_per_second": 3549.918162085996,
+        "mb_per_hour": 12.779705383509585,
+        "payload_bytes": 13317534,
+        "payload_bytes_per_second": 1847.927722201583
+      },
+      "checkpoints_limitless": {
+        "messages": 841,
+        "bytes": 910999,
+        "stored_bytes": 147339,
+        "messages_per_second_mean": 0.11669632038270233,
+        "messages_per_second_p95": 1,
+        "bytes_per_second": 126.40931173878887,
+        "mb_per_hour": 0.45507352225963993,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "processing_lag": {
+        "messages": 3351,
+        "bytes": 793699,
+        "stored_bytes": 171893,
+        "messages_per_second_mean": 0.4649814145094358,
+        "messages_per_second_p95": 2,
+        "bytes_per_second": 110.13288084593395,
+        "mb_per_hour": 0.39647837104536227,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "protocol_diagnostics": {
+        "messages": 4222,
+        "bytes": 3102517,
+        "stored_bytes": 360658,
+        "messages_per_second_mean": 0.5858405049414617,
+        "messages_per_second_p95": 2,
+        "bytes_per_second": 430.5021615039007,
+        "mb_per_hour": 1.5498077814140425,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "desync_diagnostics": {
+        "messages": 8430,
+        "bytes": 239855937,
+        "stored_bytes": 25501327,
+        "messages_per_second_mean": 1.1697383838599056,
+        "messages_per_second_p95": 4,
+        "bytes_per_second": 33282.1703565342,
+        "mb_per_hour": 119.81581328352313,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "recoveries": {
+        "messages": 8426,
+        "bytes": 2882114,
+        "stored_bytes": 370576,
+        "messages_per_second_mean": 1.1691833478533291,
+        "messages_per_second_p95": 4,
+        "bytes_per_second": 399.9192612645324,
+        "mb_per_hour": 1.4397093405523165,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      },
+      "errors": {
+        "messages": 44,
+        "bytes": 21606,
+        "stored_bytes": 9457,
+        "messages_per_second_mean": 0.006105396072341144,
+        "messages_per_second_p95": 0,
+        "bytes_per_second": 2.9980269895227902,
+        "mb_per_hour": 0.010792897162282045,
+        "payload_bytes": null,
+        "payload_bytes_per_second": null
+      }
+    },
+    "scope": "UTF-8 application frames and JSONL; excludes TLS/TCP overhead; rates include idle seconds"
+  },
+  "coverage": {
+    "duration_seconds": "7206.730252879",
+    "cross_venue_valid_coverage": "0.9919058677989651418695433143",
+    "baseline_2s_coverage": "0.6603002315538306201146520844"
+  },
+  "coverage_totals_ns": {
+    "total_monitoring_ns": 7206730252879,
+    "Polymarket_MISSING_ns": 681007525,
+    "Limitless_MISSING_ns": 681007525,
+    "both_invalid_ns": 58332227404,
+    "cross_venue_MISSING_ns": 681007525,
+    "Polymarket_DESYNC_ns": 43695890236,
+    "Limitless_DESYNC_ns": 15849352368,
+    "cross_venue_DESYNC_ns": 54328188683,
+    "Polymarket_connection_healthy_ns": 7196832977207,
+    "Polymarket_RECOVERING_ns": 146208270,
+    "Polymarket_VALID_ns": 7162207146848,
+    "Limitless_connection_healthy_ns": 7190459158645,
+    "Limitless_RECOVERING_ns": 3289052452,
+    "cross_venue_RECOVERING_ns": 3323031196,
+    "Limitless_VALID_ns": 7186910840534,
+    "both_valid_ns": 7148398025475,
+    "baseline_2s_both_valid_ns": 4758605654722
+  },
+  "health": {
+    "run_id": "20260910T092622Z-1efcb0c72bc1",
+    "samples": 453,
+    "cpu_percent": {
+      "mean": 41.71059932088456,
+      "min": 22.667910447761194,
+      "max": 58.478605388272584
+    },
+    "iowait_percent": {
+      "mean": 0.15973755788098162,
+      "min": 0.09404388714733543,
+      "max": 0.26881720430107525
+    },
+    "disk_read_mb_s": {
+      "mean": 0.043351580434230666,
+      "min": 0.0,
+      "max": 8.721006321529094
+    },
+    "disk_write_mb_s": {
+      "mean": 0.5469774570735975,
+      "min": 0.2749030995564071,
+      "max": 9.871034717637732
+    },
+    "mem_available_gb": {
+      "mean": 5.136204002048565,
+      "min": 4.976627712,
+      "max": 5.176786944
+    },
+    "disk_free_gb": {
+      "mean": 51.26424181771302,
+      "min": 50.954051584,
+      "max": 51.57167104
+    },
+    "slice_mb": {
+      "mean": 298.62006449448126,
+      "min": 148.635648,
+      "max": 415.137792
+    },
+    "anon_mb": {
+      "mean": 75.3107287593819,
+      "min": 46.649344,
+      "max": 79.540224
+    },
+    "throttled_seconds_per_second": {
+      "mean": 0.15462961988156979,
+      "min": 0.0,
+      "max": 0.38241338696243976
+    },
+    "last_memory_events": {
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0
+    },
+    "first": 1789032383.6332011,
+    "last": 1789039582.9047039,
+    "max_observed_queue_items": 0
+  },
+  "technical": {
+    "run_id": "20260910T092622Z-1efcb0c72bc1",
+    "quantile_method": "inverse empirical CDF, nearest rank",
+    "timer_lag_over_100ms_only": {
+      "count": 3351,
+      "p50": 440.710869,
+      "p95": 2030.8857630000002,
+      "p99": 2251.080846,
+      "max": 3101.884604
+    },
+    "writer_processing_lag_periodic_samples_ms": {
+      "count": 453,
+      "p50": 0.179841,
+      "p95": 1.347495,
+      "p99": 4.776536,
+      "max": 41.626767
+    },
+    "receive_oldest_age_periodic_samples_ms": {
+      "count": 453,
+      "p50": 0,
+      "p95": 0,
+      "p99": 0,
+      "max": 0
+    },
+    "reconnect_same_venue_market": {
+      "Polymarket": 3,
+      "Limitless": 9
+    },
+    "distinct_connected_markets": {
+      "Polymarket": 26,
+      "Limitless": 26
+    },
+    "connection_events": {
+      "Polymarket/CONNECTED": 29,
+      "Limitless/CONNECTED": 35,
+      "Polymarket/INVALID": 29,
+      "Limitless/INVALID": 35
+    },
+    "error_groups": {
+      "Limitless/ValueError/Limitless version regression; fresh session required": 7,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789033200'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 4,
+      "Limitless/ValueError/Initial snapshot missing": 1,
+      "Limitless/ConnectionClosedError/no close frame received or sent": 1,
+      "Polymarket/ValueError/DESYNC snapshot recovery deadline exceeded": 2,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789034400'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 4,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789035000'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 5,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789036200'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 3,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789036800'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 4,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789038000'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 5,
+      "Polymarket/RuntimeError/Receive continuity invalidated; fresh connection required": 1,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789038600'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 2,
+      "discovery/HTTPStatusError/Client error '404 Not Found' for url 'https://api.limitless.exchange/markets/btc-up-or-down-5-min-1789039800'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404": 5
+    },
+    "desync_diagnostics": {
+      "Polymarket": 8430
+    },
+    "recovery_duration_ms": {
+      "count": 8426,
+      "p50": 3.428706,
+      "p95": 29.44409,
+      "p99": 63.435896,
+      "max": 841.771938
+    },
+    "neighbor_live_health_samples": {
+      "abc-rap-maker-shadow-observer-1": {
+        "healthy": 400,
+        "unhealthy": 53
+      },
+      "abc-rap-account-sync-1": {
+        "healthy": 453
+      },
+      "moex-frontend": {
+        "other": 453
+      },
+      "moex-backend": {
+        "healthy": 453
+      },
+      "abc-rap-collector-1": {
+        "healthy": 390,
+        "unhealthy": 63
+      },
+      "abc-rap-postgres-1": {
+        "healthy": 453
+      },
+      "deltagrid-frontend-1": {
+        "healthy": 453
+      },
+      "deltagrid-backend-1": {
+        "healthy": 453
+      },
+      "deltagrid-preview-frontend-1": {
+        "healthy": 453
+      },
+      "deltagrid-preview-backend-1": {
+        "healthy": 453
+      },
+      "traefik-nahs-traefik-1": {
+        "restarting": 452,
+        "other": 1
+      },
+      "paperclip-dv11-paperclip-1": {
+        "other": 453
+      },
+      "deltagrid-preview-postgres-1": {
+        "healthy": 453
+      },
+      "moex-db": {
+        "healthy": 453
+      },
+      "hermes-agent-eh4b-hermes-agent-1": {
+        "other": 453
+      },
+      "deltagrid-postgres-1": {
+        "healthy": 453
+      },
+      "fervent_merkle": {
+        "other": 453
+      }
+    },
+    "resource_trend": {
+      "0-30min": {
+        "samples": 114,
+        "anon_first_mb": 46.649344,
+        "anon_last_mb": 78.446592,
+        "anon_max_mb": 79.323136,
+        "host_cpu_mean": 40.65631465332391,
+        "host_cpu_max": 55.989911727616644
+      },
+      "30-60min": {
+        "samples": 113,
+        "anon_first_mb": 78.446592,
+        "anon_last_mb": 77.615104,
+        "anon_max_mb": 78.467072,
+        "host_cpu_mean": 42.518533834650114,
+        "host_cpu_max": 57.489750867234314
+      },
+      "60-90min": {
+        "samples": 113,
+        "anon_first_mb": 77.615104,
+        "anon_last_mb": 77.627392,
+        "anon_max_mb": 77.627392,
+        "host_cpu_mean": 39.72919616776541,
+        "host_cpu_max": 54.00696864111498
+      },
+      "90-120min": {
+        "samples": 113,
+        "anon_first_mb": 77.623296,
+        "anon_last_mb": 78.508032,
+        "anon_max_mb": 79.540224,
+        "host_cpu_mean": 43.86386330639984,
+        "host_cpu_max": 58.478605388272584
+      }
+    },
+    "receive_per_message_quantiles": null,
+    "receive_quantile_limitation": "Only maxima persisted; no event-level distribution. Timer log excludes lag <=100 ms; writer uses approx 15-second health snapshots."
+  },
+  "replay": {
+    "polymarket": {
+      "raw_frames": 2539444,
+      "reconstructed_updates": 4882862,
+      "checkpoints_checked": 10202,
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "first_divergence": null,
+      "consistent": true,
+      "scope": "Every raw frame reconstructed; exact full book/status/timestamp equality at checkpoints"
+    },
+    "limitless": {
+      "raw_frames": 35803,
+      "reconstructed_updates": 19378,
+      "checkpoints_checked": 841,
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "first_divergence": null,
+      "consistent": true,
+      "scope": "Every raw frame reconstructed; exact full book/status/timestamp equality at checkpoints"
+    }
+  },
+  "observation_replay": {
+    "consistent": true,
+    "counts": {
+      "observations": 2373763,
+      "matches_checked": 1032,
+      "unpriced_rows_excluded": 2614207,
+      "raw_frames": 2575247,
+      "priced_rows_checked": 30618461,
+      "limitless_older_versions": 13
+    },
+    "protocol_unsafe_intervals": {
+      "b5198e11d4f3493b9df71b0df3ff1bec": {
+        "window": 1789032600,
+        "market": "btc-up-or-down-5-min-1789032600",
+        "raw_ordinal": 236105,
+        "raw_ns": 2120510819823835,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 236108,
+        "invalidated_ns": 2120510820927470,
+        "deferred_invalidation_ms": "1.103635"
+      },
+      "5920d8d9c3e840ddac49d9b220f5f23c": {
+        "window": 1789032900,
+        "market": "btc-up-or-down-5-min-1789032900",
+        "raw_ordinal": 236110,
+        "raw_ns": 2120510822486545,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 236112,
+        "invalidated_ns": 2120510823105108,
+        "deferred_invalidation_ms": "0.618563"
+      },
+      "e8dfeb1d8eac4383abcfcf32eab18d3d": {
+        "window": 1789032900,
+        "market": "btc-up-or-down-5-min-1789032900",
+        "raw_ordinal": 345645,
+        "raw_ns": 2120765513294175,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 345648,
+        "invalidated_ns": 2120765514171888,
+        "deferred_invalidation_ms": "0.877713"
+      },
+      "31f48a3ead3b4cf28dfa8432c63200a3": {
+        "window": 1789033200,
+        "market": "btc-up-or-down-5-min-1789033200",
+        "raw_ordinal": 346284,
+        "raw_ns": 2120765862659971,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 346286,
+        "invalidated_ns": 2120765863272312,
+        "deferred_invalidation_ms": "0.612341"
+      },
+      "48cb616bae8448b8bc1462228a65c7ae": {
+        "window": 1789033200,
+        "market": "btc-up-or-down-5-min-1789033200",
+        "raw_ordinal": 485665,
+        "raw_ns": 2121028303656639,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 485668,
+        "invalidated_ns": 2121028304580431,
+        "deferred_invalidation_ms": "0.923792"
+      },
+      "f693f8dbb86d49398a8935126a998a64": {
+        "window": 1789033200,
+        "market": "btc-up-or-down-5-min-1789033200",
+        "raw_ordinal": 551477,
+        "raw_ns": 2121155416171948,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 551480,
+        "invalidated_ns": 2121155416967431,
+        "deferred_invalidation_ms": "0.795483"
+      },
+      "55eae2af0c074f5d96175e5f1702672a": {
+        "window": 1789033500,
+        "market": "btc-up-or-down-5-min-1789033500",
+        "raw_ordinal": 551481,
+        "raw_ns": 2121155419036447,
+        "reason": "Late Limitless version regression",
+        "invalidated_ordinal": 551483,
+        "invalidated_ns": 2121155419695630,
+        "deferred_invalidation_ms": "0.659183"
+      }
+    },
+    "strategy_excluded_windows": [
+      1789032600,
+      1789032900,
+      1789033200,
+      1789033500
+    ],
+    "scope": "Every non-null edge: raw depth, Decimal VWAP, status, book timestamp and market matching. Null rows excluded; exact transport deadline equality not asserted."
+  },
+  "copy_verification": {
+    "verified_files": 1661,
+    "bytes": 479729601,
+    "archive_sha256": "ff5395375638256894005fc15ab5c053776bdd67b003d8cb097ddd86e023cc07",
+    "gzip_crc_footer_verified": 1656
+  },
+  "disk_after_copy": {
+    "data_bytes": 1187436568,
+    "free_bytes": 50468515840,
+    "reserve_bytes": 25966325760,
+    "preflight_pass": true
+  },
+  "collector_cpu_seconds": 2784.925,
+  "neighbor_snapshot_delta": "Only pre-existing Traefik restart loop: 35188 to 35312; other RestartCount/StartedAt/OOMKilled and native units unchanged",
+  "stopped_units": [
+    "prediction-collector.service",
+    "prediction-status.service",
+    "prediction-health.timer",
+    "prediction-health.service"
+  ],
+  "no_new_runs": true
+}
