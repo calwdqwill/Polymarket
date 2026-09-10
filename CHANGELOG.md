@@ -550,3 +550,7 @@
 - Realtime worker пока является заглушкой.
 - Endpoints свечей, тиков, анализа и дисбалансов пока возвращают `501`.
 - Frontend пока является визуальным skeleton без загрузки данных из API.
+
+## 2026-09-10 — Prediction Arb dashboard, Iteration 2
+
+Добавлены локальный read-only API и экраны Next.js для validated shadow journal. Сценарии 100/250 ms, signal/arrival books, net и failures разделены; сохранены окна без сигналов и отрицательный PnL. Графики используют bounded historical cache и точные события; gaps не соединяются. Свечной dashboard сохранён, добавлена ссылка на новый раздел. Стратегия, формулы, collector и VPS не менялись. Проверки и ограничения: [отчёт](PREDICTION_ARB_DASHBOARD_REPORT.md).

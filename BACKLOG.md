@@ -190,3 +190,13 @@
 - `volume` nullable, потому что Chainlink может не давать биржевой объем.
 - Исторический tick-level drill-down через Chainlink пока не гарантирован.
 - PowerShell может некорректно отображать русский текст в терминале, хотя данные в UTF-8 и БД сохраняются корректно.
+
+## Prediction Arb — результат Iteration 2
+
+- [x] Read-only journal projection, summary/health/windows/attempts/stats API.
+- [x] Отдельные сценарии 100/250, пагинация и фильтры; отрицательные результаты включены.
+- [x] Next.js экраны обзора, истории, окна, попытки, журнала и статистики.
+- [x] Lightweight-charts: probability asks, edge A/B, точные event markers, cumulative/window/hour PnL.
+- [x] Контроль hash источников, ограниченная выборка, явные no-data/error состояния.
+- [ ] Отдельная Iteration 3: уточнение fees/settlement и согласованный execution API preflight. Не запускать автоматически.
+- [ ] Будущий storage adapter: bid ladders, transactional restart и live delivery — отдельный scope; текущий cache этого не подтверждает.

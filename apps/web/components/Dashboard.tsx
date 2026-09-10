@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
+import Link from "next/link";
 
 import { CandleChart } from "./CandleChart";
 import {
@@ -561,6 +562,7 @@ export function Dashboard() {
             <h1>Crypto imbalance dashboard</h1>
           </div>
           <div className="headerActions">
+            <Link className="ghostButton" href="/prediction">Prediction Arb</Link>
             <button className="ghostButton" type="button" onClick={exportCsv}>
               CSV
             </button>

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import analysis, assets, candles, imbalances, status, ticks
+from app.api.routes import analysis, assets, candles, imbalances, prediction, status, ticks
 from app.core.config import settings
 
 
@@ -21,6 +21,7 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(status.router, prefix="/api", tags=["status"])
+    app.include_router(prediction.router, prefix="/api/prediction", tags=["prediction"])
     app.include_router(assets.router, prefix="/api/assets", tags=["assets"])
     app.include_router(candles.router, prefix="/api/candles", tags=["candles"])
     app.include_router(ticks.router, prefix="/api/ticks", tags=["ticks"])

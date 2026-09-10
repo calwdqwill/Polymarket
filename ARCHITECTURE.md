@@ -512,3 +512,13 @@ python -m app.scripts.seed_assets
 - Frontend dashboard реализован в MVP-объеме; пока нет сохранения фильтров в URL/localStorage, pagination/virtualization таблиц и отдельного режима сравнения источников.
 - Polymarket historical слой еще не реализован и должен храниться отдельно от spot candles.
 - Внешний backup пока не настроен: ежечасные SQLite backups лежат на том же VPS.
+
+## Локальная read-model Prediction Arb — Iteration 2
+
+`api/routes/prediction.py` → `LocalDashboardRepository` → проверенный закрытый JSONL journal. Последняя версия по ключу формирует окна и попытки, исходники не изменяются. Основная БД, collector и shadow engine не затронуты. Backend сохраняет Decimal в строковом JSON; JavaScript Number используется только для отображения.
+
+`dashboard_series.py` лениво читает один SHA-pinned gzip cache, выбирает 601 receive-state sample и отдельно сохраняет точные invalid интервалы, включая expiry между сообщениями. Кешируется максимум четыре готовые проекции. Через gap/недостаточную depth линия графика не продолжается. Это визуальная выборка, не поиск экстремумов; точные signal/arrival/fill/terminal markers берутся из журнала.
+
+Публичный контракт `/api/prediction` не зависит от файловых путей браузера: summary, health, windows с пагинацией, window detail/series, attempts с фильтрами/detail и stats. Будущая storage-реализация заменяет backend repository; live adapter в этой итерации не создаётся. Новые React-компоненты разделены по экранам в `components/prediction`; графики используют уже установленный lightweight-charts.
+
+Сценарии 100/250 не объединяются. Rate/hour использует календарную сумму длительностей включённых окон; valid hours показаны отдельно. Потери не удаляются. Pair comparison связан по window/signal/direction, а не по номеру попытки. Bid отсутствует в cache и показан как недоступный; depth ограничена сохранённым ask prefix. Signal VWAP использует существующий fill helper и предыдущий consumption того же scenario/window.

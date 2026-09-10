@@ -530,3 +530,9 @@ python -m app.scripts.poll_chainlink_streams --asset all --interval 10
 - Chainlink Candlestick historical credentials.
 - Внешний backup для SQLite/будущей PostgreSQL базы.
 - Historical слой Polymarket CLOB/outcome-token данных, если он нужен как отдельный источник, а не spot/oracle candles.
+
+## Prediction dashboard — Iteration 2
+
+Реализован локальный read-only API и новый раздел Next.js для validated historical shadow: обзор, история окон, графики цены/edge, подробности попытки, журнал и раздельная статистика/PnL 100/250 ms. Исходные 122 окна и 194 попытки остаются внешними артефактами. Итог и проверки: [отчёт](PREDICTION_ARB_DASHBOARD_REPORT.md).
+
+После завершения этой итерации STOP. Iteration 3, execution preflight, authenticated API, live/VPS integration и orders не начинаются. Независимый collector-трек не изменён.

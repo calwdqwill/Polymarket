@@ -460,3 +460,15 @@ curl http://127.0.0.1:18000/api/status/sources
 Локальный Windows watchdog можно оставить как резервный источник наблюдения, но основной сбор `chainlink_streams` теперь должен идти на VPS через `systemd`.
 
 Следующий продуктовый/данный шаг: получить Chainlink Candlestick API credentials, дозагрузить `source = chainlink_candlestick` и сравнить его с `source = binance_klines`. Отдельный будущий слой Polymarket CLOB/outcome-token истории нужно проектировать отдельно от spot/oracle candles.
+
+## Prediction Arb — локальный dashboard, Iteration 2
+
+Маршруты: `/prediction`, `/prediction/windows`, `/prediction/windows/[id]`, `/prediction/trades`, `/prediction/trades/[id]`, `/prediction/stats`. Ссылка добавлена в существующий свечной dashboard.
+
+Запуск из `services/api`: `.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000`. Из `apps/web`: `npm run build`, затем `npm run start -- --hostname 127.0.0.1 --port 3000`. Откройте `http://127.0.0.1:3000/prediction`.
+
+Необязательные backend env: `PREDICTION_DASHBOARD_JOURNAL_DIR` — абсолютный путь к завершённому validated shadow bundle; `PREDICTION_DASHBOARD_CACHE_DIR` — абсолютный путь к historical receive cache. По умолчанию используются `shadow-engine-v1-validated` и `target-profit-research-v1/cache` относительно корня репозитория. Frontend использует существующий `NEXT_PUBLIC_API_BASE_URL`, по умолчанию `http://127.0.0.1:8000`; изменение требует новой сборки.
+
+Данные внешние, в Git не включаются. При отсутствии bundle показывается NO_DATA; неполный/повреждённый bundle даёт 503, отсутствующий cache не блокирует журнал. Источник фиксируется на время процесса; после замены bundle перезапустите API. Проверяются существующий независимый verifier и SHA-256 chart cache. Никогда не указывайте каталог работающего collector.
+
+Все endpoints `/api/prediction/*` read-only. Нет подключения VPS, sockets или ордеров. Settlement/fees UNKNOWN; денежные значения — условный simulated net. Подробности и ограничения: [отчёт Iteration 2](PREDICTION_ARB_DASHBOARD_REPORT.md).
