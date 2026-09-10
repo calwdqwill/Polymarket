@@ -57,3 +57,25 @@ class SlowCloseTests(unittest.IsolatedAsyncioTestCase):
             release.set()
             with self.assertRaises(type(error)):
                 await task
+
+
+class ReceiveQueueTests(unittest.TestCase):
+    def test_fragmented_message_bytes_age_and_overflow(self):
+        from app.prediction.transport_queue import ReceiveQueue
+
+        queue = ReceiveQueue()
+        self.assertTrue(queue.put(3, False, 100))
+        self.assertTrue(queue.put(4, True, 200))
+        self.assertEqual(queue.bytes, 7)
+        queue.consumed(1_000_100)
+        self.assertEqual(queue.bytes, 0)
+        self.assertEqual(queue.max_processing_lag_ms, 1)
+        self.assertFalse(queue.put(8 * 1024 * 1024 + 1, True, 300))
+
+    def test_frame_count_bound(self):
+        from app.prediction.transport_queue import ReceiveQueue
+
+        queue = ReceiveQueue()
+        for _ in range(512):
+            self.assertTrue(queue.put(1, True, 1))
+        self.assertFalse(queue.put(1, True, 1))

@@ -10,11 +10,11 @@
 
 Launcher удерживает flock в `state/writer.lock`, создаёт новый каталог `raw/<UTC>-<UUID>` и сохраняет boot/process/run identity. SIGTERM/SIGINT устанавливают событие graceful stop. `Restart=no` предотвращает незапрошенное продление bounded sample; ручной restart создаёт новую сессию. Старый raw не дописывается.
 
-Raw записывается синхронно до применения события; writer queue отсутствует. Метрики `queue_items/bytes/oldest_age_ms=0` относятся именно к writer, а не TCP/WebSocket backlog. WebSocket receive buffer ограничен 16 кадрами, возраст данных до recv неизвестен. `pending_durable_*` измеряет записи до fsync; `processing_lag_ms` — от recv до записи raw. Percentile частоты ограничен последними 300 секундами, среднее — за весь запуск. Исторические файлы не сканируются при каждом metrics tick.
+Raw записывается синхронно до применения события; writer queue отсутствует. Метрики `queue_items/bytes/oldest_age_ms=0` относятся именно к writer, а не TCP/WebSocket backlog. WebSocket backpressure начинается от 16 кадров; telemetry учитывает frames/items/bytes и возраст до completed recv. При >512 frames или >8 MiB буфера немедленно снимается VALID, записывается queue_overflow и соединение прерывается. Возраст до WS parser неизвестен. `pending_durable_*` измеряет записи до fsync; сохраняются max_durable_lag_ms и max_flush_ms; `processing_lag_ms` — от recv до записи raw. Percentile частоты ограничен последними 300 секундами, среднее — за весь запуск. Исторические файлы не сканируются при каждом metrics tick.
 
 Раз в секунду выполняется flush/fsync активных потоков; закрытие gzip дописывает footer и делает fsync. SHA-256 закрытых сегментов формируется после остановки. Это не подтверждение off-host backup или power-loss восстановления.
 
-Порог controlled stop: free < max(20 GB, 25% FS), prediction data >=20 GB, MemAvailable <3 GB, CPU >=70% в течение 30 секунд. При pre-flight нужен ещё остаток prediction budget и 5 GB буфера. Текущий размер учитывает один начальный обход и incremental gzip bytes; служебные sidecar/health файлы требуют дополнительного контроля при gate. Автоудаления нет. При использовании >=70% FS записывается warning.
+Порог controlled stop: free < max(20 GB, 25% FS), prediction data >=20 GB, MemAvailable <3 GB, CPU >=70% в течение 30 секунд. При pre-flight нужен ещё остаток prediction budget и 5 GB буфера. Текущий размер учитывает один начальный обход, incremental gzip bytes, фиксированные sidecars и рост state-файлов. Дополнительный запас 100 MB останавливает запись заранее между проверками. Автоудаления нет. При использовании >=70% FS записывается warning.
 
 ## Команды
 

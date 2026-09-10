@@ -27,6 +27,10 @@ class LiveJournal(Journal):
         self.pending_bytes = 0
         self.processing_lag_ms = 0.0
         self.last_durable_ns = self.started_ns
+        self.transport_queues = {}
+        self.queue_peaks = Counter()
+        self.max_durable_lag_ms = 0.0
+        self.max_flush_ms = 0.0
 
     def append(self, stream, payload, received=None, mono_ns=None, connection=None):
         received = received or datetime.now(timezone.utc)
@@ -70,11 +74,13 @@ class LiveJournal(Journal):
             atomic_json(self.directory / "segments.json", dict(closed=self.closed_segments, active=self.segment))
 
     def flush(self):
+        started = time.perf_counter_ns()
         self.rotate(time.perf_counter_ns())
         for handle in self.handles.values():
             handle.flush()
             os.fsync(handle.fileobj.fileno())
         self._mark_durable()
+        self.max_flush_ms = max(self.max_flush_ms, (time.perf_counter_ns() - started) / 1e6)
 
     def _close_handles(self):
         for stream, handle in self.handles.items():
@@ -87,6 +93,10 @@ class LiveJournal(Journal):
         self._mark_durable()
 
     def _mark_durable(self):
+        if self.pending_since_ns:
+            self.max_durable_lag_ms = max(
+                self.max_durable_lag_ms, (time.perf_counter_ns() - self.pending_since_ns) / 1e6
+            )
         self.pending_since_ns = None
         self.pending_items = self.pending_bytes = 0
         self.last_durable_ns = time.perf_counter_ns()
@@ -95,6 +105,11 @@ class LiveJournal(Journal):
         self._close_handles()
         self.closed_segments.append(self.segment)
         atomic_json(self.directory / "segments.json", dict(closed=self.closed_segments, active=None))
+
+    def queue_closed(self, connection):
+        values = self.transport_queues.pop(connection).snapshot()
+        for key in ("peak_items", "peak_bytes", "peak_age_ms", "max_processing_lag_ms"):
+            self.queue_peaks[key] = max(self.queue_peaks[key], values[key])
 
     def metrics(self):
         seconds = max((time.perf_counter_ns() - self.started_ns) / 1e9, 0.001)
@@ -113,10 +128,22 @@ class LiveJournal(Journal):
                 payload_bytes=self.wire_bytes.get(stream),
                 payload_bytes_per_second=self.wire_bytes[stream] / seconds if stream in self.wire_bytes else None,
             )
+        queues = [q.snapshot() for q in self.transport_queues.values()]
+        receive = dict(
+            queue_items=sum(q["queue_items"] for q in queues),
+            queue_bytes=sum(q["queue_bytes"] for q in queues),
+            oldest_age_ms=max((q["oldest_age_ms"] for q in queues), default=0),
+            scope="Parsed WS data frames through completed recv; excludes TCP/TLS pre-parser age",
+        )
+        for key in ("peak_items", "peak_bytes", "peak_age_ms", "max_processing_lag_ms"):
+            receive[key] = max([self.queue_peaks[key]] + [q[key] for q in queues])
         return dict(
             duration_seconds=seconds,
+            receive_queue=receive,
             writer=dict(
                 mode="synchronous_raw_before_apply",
+                max_durable_lag_ms=self.max_durable_lag_ms,
+                max_flush_ms=self.max_flush_ms,
                 queue_items=0,
                 queue_bytes=0,
                 oldest_age_ms=0,
@@ -124,7 +151,7 @@ class LiveJournal(Journal):
                 pending_durable_bytes=self.pending_bytes,
                 durable_lag_ms=(time.perf_counter_ns() - self.pending_since_ns) / 1e6 if self.pending_since_ns else 0,
                 processing_lag_ms=self.processing_lag_ms,
-                receive_queue_scope="websockets bounded 16 frames; TCP arrival age unavailable",
+                receive_queue_scope="receive_queue measures parsed frames; TCP arrival age unavailable",
             ),
             gzip_mb_per_hour=sum(v["stored_bytes"] for v in result.values()) / seconds * 3600 / 1e6,
             active_segment=self.segment,

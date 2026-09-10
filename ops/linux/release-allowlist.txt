@@ -32,6 +32,7 @@ services/api/app/prediction/research_statistics.py
 services/api/app/prediction/screen.py
 services/api/app/prediction/service_runtime.py
 services/api/app/prediction/storage.py
+services/api/app/prediction/transport_queue.py
 services/api/app/scripts/__init__.py
 services/api/app/scripts/analyze_prediction.py
 services/api/app/scripts/analyze_prediction_research.py

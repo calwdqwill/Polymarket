@@ -36,8 +36,8 @@
   },
   {
     "path": "docs/prediction-linux-runbook.md",
-    "bytes": 5030,
-    "sha256": "578bf6af58638828a6285f8e203092b488c1aa1014b4db9847941d75e5528503"
+    "bytes": 5432,
+    "sha256": "f6272232a8b3baca3fa5ca61bfc0a3c23940e371b4ec01addeff9ccfe4dcbd6d"
   },
   {
     "path": "docs/prediction-live-report.md",
@@ -121,13 +121,13 @@
   },
   {
     "path": "services/api/app/prediction/live_storage.py",
-    "bytes": 6350,
-    "sha256": "6dfb6c499d0da2b4dcdc1691cfeb656339e80b246962f8062991fe51bab8258f"
+    "bytes": 7819,
+    "sha256": "9f45f705221475e9300728f978b8f35261979a97be4f3215187eebaaf0aea877"
   },
   {
     "path": "services/api/app/prediction/live_transport.py",
-    "bytes": 13440,
-    "sha256": "7188701cc0174a54b068e7288f7b6d0d1750f3ac5bfa3a883c4be172602c3ad4"
+    "bytes": 13986,
+    "sha256": "b011581340e7e465e55af7bc341dc2559b16855871384f74f652f912b7224525"
   },
   {
     "path": "services/api/app/prediction/models.py",
@@ -151,13 +151,18 @@
   },
   {
     "path": "services/api/app/prediction/service_runtime.py",
-    "bytes": 3752,
-    "sha256": "6e2bb25a4188c99e52765eea14e3eb97f54a181685476e527d88de43076d2d4a"
+    "bytes": 4625,
+    "sha256": "913c8cfb1f5fac0a271fa8d193dfd73ec0d1e0f4aa0e4c115f17da1dbf1700b1"
   },
   {
     "path": "services/api/app/prediction/storage.py",
     "bytes": 2256,
     "sha256": "66fd2e09d61d9a1f1f6c1474a483092030efaafaeb3309d8dacd3326ff6919ba"
+  },
+  {
+    "path": "services/api/app/prediction/transport_queue.py",
+    "bytes": 3274,
+    "sha256": "7b9200d62cf7d86a488d46d3e12e8603f464ce70fd8e0cd718c164fbab00e943"
   },
   {
     "path": "services/api/app/scripts/__init__.py",
@@ -296,7 +301,7 @@
   },
   {
     "path": "services/api/tests/test_prediction_service.py",
-    "bytes": 2433,
-    "sha256": "eda1ceec0d83943ebd7a07ff3cafe9cd261d84d8c5bbebad6b87503b764b074b"
+    "bytes": 3240,
+    "sha256": "cb8952923128d99cf1cbf6b5decc75874155f557dc3c0b2c0c438e38c74b7b05"
   }
 ]

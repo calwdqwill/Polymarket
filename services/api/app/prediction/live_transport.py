@@ -4,12 +4,14 @@ import time
 from collections import deque
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from functools import partial
 from uuid import uuid4
 
 from websockets.asyncio.client import connect
 
 from app.prediction.books import LimitlessBooks, PolymarketBooks
 from app.prediction.live_storage import decode
+from app.prediction.transport_queue import MonitoredConnection, ReceiveQueue
 
 URLS = {
     "Polymarket": "wss://ws-subscriptions-clob.polymarket.com/ws/market",
@@ -60,6 +62,8 @@ async def stream_market(market, journal, changed, register, checkpoint_seconds=1
             )
             checkpoint_at[book.outcome] = mono
 
+        queue = ReceiveQueue()
+        journal.transport_queues[connection] = queue
         invalidated = False
 
         def invalidate():
@@ -88,6 +92,12 @@ async def stream_market(market, journal, changed, register, checkpoint_seconds=1
                     max_size=8 * 1024 * 1024,
                     max_queue=16,
                     close_timeout=5,
+                    create_connection=partial(
+                        MonitoredConnection,
+                        queue=queue,
+                        invalidate=invalidate,
+                        overflow=lambda value: journal.append("queue_overflow", value, connection=connection),
+                    ),
                 ),
                 invalidate,
             ) as ws:
@@ -270,4 +280,5 @@ async def stream_market(market, journal, changed, register, checkpoint_seconds=1
             )
         finally:
             invalidate()
+            journal.queue_closed(connection)
         await asyncio.sleep(min(15, 2 ** min(failures, 4)))

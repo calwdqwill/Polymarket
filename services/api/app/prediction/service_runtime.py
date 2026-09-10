@@ -48,6 +48,7 @@ class Safety:
     def __init__(self, root):
         self.root = root
         self.initial_bytes = data_size(root)
+        self.state_sizes = {p: p.stat().st_size for p in (root / "state").iterdir() if p.is_file()}
         self.last_check = 0
         self.high_cpu_since = None
         self.cpu = None
@@ -64,7 +65,28 @@ class Safety:
         usage = shutil.disk_usage(self.root)
         # Closed counters + only active descriptors: no historical directory scan per tick.
         measured = sum(v["stored_bytes"] for v in journal.metrics()["streams"].values())
-        warning = disk_gate(usage.total, usage.free, self.initial_bytes + measured)
+        sidecars = sum(
+            (journal.directory / name).stat().st_size
+            for name in (
+                "run.json",
+                "segments.json",
+                "live.json",
+                "live.html",
+                "metrics.json",
+                "live.json.tmp",
+                "live.html.tmp",
+                "metrics.json.tmp",
+            )
+            if (journal.directory / name).exists()
+        )
+        state_growth = sum(
+            max(0, p.stat().st_size - self.state_sizes.get(p, 0))
+            for p in (self.root / "state").iterdir()
+            if p.is_file()
+        )
+        # Stop early enough to cover one burst between five-second checks.
+        budgeted = self.initial_bytes + measured + sidecars + state_growth + 100_000_000
+        warning = disk_gate(usage.total, usage.free - 100_000_000, budgeted)
         if memory_available() < 3_000_000_000:
             raise RuntimeError("MemAvailable below 3 GB; controlled prediction stop")
         values = [int(x) for x in Path("/proc/stat").read_text().splitlines()[0].split()[1:9]]
